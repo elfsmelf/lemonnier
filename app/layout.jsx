@@ -1,4 +1,5 @@
 import { Fraunces, Inter_Tight, JetBrains_Mono } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -53,7 +54,13 @@ export default function RootLayout({ children }) {
       data-mode="light"
       className={`${fraunces.variable} ${interTight.variable} ${jetbrainsMono.variable}`}
     >
-      <body>{children}</body>
+      <body>
+        {children}
+        <Script
+          src="https://cdn.dni.nimbata.com/56902091997.min.js"
+          strategy="afterInteractive"
+        />
+      </body>
     </html>
   );
 }
