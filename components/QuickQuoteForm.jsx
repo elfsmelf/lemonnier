@@ -14,7 +14,6 @@ export default function QuickQuoteForm({ compact = false, anchorId }) {
     phone: "",
     suburb: "",
     scope: "Full design & build",
-    budget: "$50k – $100k",
     timing: "Within 3 months",
     notes: "",
   });
@@ -225,30 +224,18 @@ export default function QuickQuoteForm({ compact = false, anchorId }) {
       {step === 2 && (
         <>
           <p className="qform-progress">Last step — a few details so Thibeau comes prepared.</p>
-          <div className="field-row">
-            <label className="field">
-              <span>Project</span>
-              <select value={form.scope} onChange={(e) => set("scope", e.target.value)}>
-                <option>Full design &amp; build</option>
-                <option>Design only</option>
-                <option>Pool surrounds</option>
-                <option>Front yard / entry</option>
-                <option>Backyard renovation</option>
-                <option>Garden refresh</option>
-                <option>Maintenance</option>
-              </select>
-            </label>
-            <label className="field">
-              <span>Budget</span>
-              <select value={form.budget} onChange={(e) => set("budget", e.target.value)}>
-                <option>Under $50k</option>
-                <option>$50k – $100k</option>
-                <option>$100k – $250k</option>
-                <option>$250k +</option>
-                <option>Still figuring it out</option>
-              </select>
-            </label>
-          </div>
+          <label className="field">
+            <span>Project</span>
+            <select value={form.scope} onChange={(e) => set("scope", e.target.value)}>
+              <option>Full design &amp; build</option>
+              <option>Design only</option>
+              <option>Pool surrounds</option>
+              <option>Front yard / entry</option>
+              <option>Backyard renovation</option>
+              <option>Garden refresh</option>
+              <option>Maintenance</option>
+            </select>
+          </label>
           <label className="field">
             <span>When would you like to start?</span>
             <select value={form.timing} onChange={(e) => set("timing", e.target.value)}>
