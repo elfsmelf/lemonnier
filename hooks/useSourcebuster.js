@@ -1,0 +1,87 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import sbjs from "sourcebuster";
+
+function deriveChannelFromSourcebuster(type, source, medium) {
+  const src = (source || "").toLowerCase();
+  const mdm = (medium || "").toLowerCase();
+  const typ = (type || "").toLowerCase();
+
+  if (typ === "utm") {
+    if (mdm === "cpc" || mdm === "ppc") return "Paid Search";
+    if (mdm === "social" || mdm === "paid_social") return "Paid Social";
+    if (mdm === "display" || mdm === "banner") return "Display";
+    if (mdm === "email") return "Email";
+  }
+
+  if (typ === "organic") return "Organic Search";
+
+  if (typ === "referral") {
+    if (
+      src.includes("facebook") ||
+      src.includes("instagram") ||
+      src.includes("linkedin") ||
+      src.includes("twitter")
+    ) {
+      return "Organic Social";
+    }
+    return "Referral";
+  }
+
+  return "Direct";
+}
+
+function extractGclidFromUrl(url) {
+  if (!url) return "";
+  try {
+    const urlObj = new URL(url);
+    return urlObj.searchParams.get("gclid") || "";
+  } catch {
+    return "";
+  }
+}
+
+export function useSourcebuster() {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    sbjs.init({
+      lifetime: 6,
+      session_length: 30,
+      timezone_offset: 10,
+    });
+
+    const sbjsData = sbjs.get;
+
+    if (sbjsData) {
+      const channel = deriveChannelFromSourcebuster(
+        sbjsData.current?.typ || "",
+        sbjsData.current?.src || "",
+        sbjsData.current?.mdm || ""
+      );
+
+      const gclid = extractGclidFromUrl(sbjsData.current_add?.ep || "");
+
+      setData({
+        channel,
+        source: sbjsData.current?.src || "",
+        medium: sbjsData.current?.mdm || "",
+        campaign: sbjsData.current?.cmp || "",
+        content: sbjsData.current?.cnt || "",
+        term: sbjsData.current?.trm || "",
+        gclid,
+        firstSource: sbjsData.first?.src || "",
+        firstMedium: sbjsData.first?.mdm || "",
+        firstCampaign: sbjsData.first?.cmp || "",
+        visits: sbjsData.udata?.vst || "1",
+        pagesSeen: sbjsData.session?.pgs || "1",
+        landingPage: sbjsData.current_add?.ep || "",
+        leadPage: typeof window !== "undefined" ? window.location.href : "",
+        referer: sbjsData.current_add?.rf || "",
+      });
+    }
+  }, []);
+
+  return data;
+}
