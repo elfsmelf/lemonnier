@@ -21,7 +21,7 @@ export default function Footer() {
         </div>
         <div className="footer-meta">
           <span>© 2026 Lemonnier Landscapes · Perth, WA</span>
-          <span>ABN 00 000 000 000 · WA Reg. Builder 00000</span>
+          <span>ABN 32 409 955 667</span>
           <a href="#top">Back to top ↑</a>
         </div>
       </div>

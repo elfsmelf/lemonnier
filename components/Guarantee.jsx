@@ -12,7 +12,7 @@ const items = [
   },
   {
     h: "Fully licensed & insured",
-    p: "WA Registered Builder, public liability, workers comp — all covered.",
+    p: "Public liability and workers comp — fully covered on every job.",
   },
   {
     h: "One team, start to finish",
