@@ -232,6 +232,8 @@ export default function QuickQuoteForm({ compact = false, anchorId }) {
               <option>Pool surrounds</option>
               <option>Front yard / entry</option>
               <option>Backyard renovation</option>
+              <option>Turf installation</option>
+              <option>Artificial grass</option>
               <option>Garden refresh</option>
               <option>Maintenance</option>
             </select>
