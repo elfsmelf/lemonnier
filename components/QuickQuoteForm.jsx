@@ -269,7 +269,7 @@ export default function QuickQuoteForm({ compact = false, anchorId }) {
           </label>
           {submitStatus === "error" && (
             <div className="qform-error" role="alert">
-              Something went wrong. Please try again or call 0401 046 618.
+              Something went wrong. Please try again or call (08) 9000 0000.
             </div>
           )}
           <button
