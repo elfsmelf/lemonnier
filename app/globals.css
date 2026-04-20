@@ -88,6 +88,15 @@ button { font-family: inherit; }
 
 .container { width: min(1280px, 94vw); margin: 0 auto; }
 
+@media (max-width: 700px) {
+  .container,
+  .trustbar-inner,
+  .nav-inner,
+  .hero-grid { width: min(1280px, 90vw); }
+  section { --gap: clamp(56px, 10vw, 88px); }
+  .hero { padding-top: clamp(32px, 8vw, 56px); padding-bottom: clamp(48px, 10vw, 72px); }
+}
+
 /* ---------- Typography ---------- */
 .display, .h-display {
   font-family: var(--font-display);
@@ -218,6 +227,11 @@ h3 { font-family: var(--font-sans); font-size: var(--fs-h3); margin: 0; font-wei
 }
 @media (max-width: 980px) {
   .hero-grid { grid-template-columns: 1fr; }
+  .hero-copy { text-align: center; }
+  .hero-copy .hero-badges { justify-content: center; }
+  .hero-copy .hero-bullets { max-width: 380px; margin-left: auto; margin-right: auto; text-align: left; }
+  .hero-copy .hero-call { text-align: center; }
+  .hero-copy .call-big { align-items: center; }
 }
 .hero-copy .display { margin-bottom: 24px; }
 .hero-badges { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 24px; }

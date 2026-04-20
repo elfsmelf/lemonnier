@@ -4,7 +4,7 @@ export default function TrustBar() {
       <div className="trustbar-inner">
         <span className="tb-item">
           <span className="tb-stars">★★★★★</span>
-          <strong>4.9</strong> on Google · 50+ reviews
+          <strong>4.9</strong> on Google
         </span>
         <span className="tb-sep">·</span>
         <span className="tb-item">Fully licensed &amp; insured</span>
