@@ -17,7 +17,6 @@ export default function Nav() {
               style={{ width: "100%", height: "auto" }}
             />
           </span>
-          <span className="logo-tag">Landscapes · Perth</span>
         </a>
         <div className="nav-right">
           <a href="tel:+61800000000" className="nav-phone" aria-label="Call (08) 9000 0000">

@@ -10,12 +10,11 @@ export default function Footer() {
             <Image
               src={images.logo}
               alt="Lemonnier Landscapes"
-              width={28}
-              height={28}
-              sizes="28px"
-              style={{ width: "28px", height: "28px", objectFit: "contain" }}
+              width={320}
+              height={89}
+              sizes="180px"
+              style={{ width: "180px", height: "auto" }}
             />
-            <span className="logo-word">Lemonnier Landscapes</span>
           </div>
           <p>Perth&apos;s high-end landscape designers &amp; builders. Since 2011.</p>
         </div>
