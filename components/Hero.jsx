@@ -50,27 +50,6 @@ export default function Hero({ headline, subhead }) {
 
         <div className="hero-form-wrap">
           <QuickQuoteForm anchorId="quote" />
-          <div className="hero-form-footnote">
-            <svg width="14" height="14" viewBox="0 0 14 14">
-              <rect
-                x="2"
-                y="5"
-                width="10"
-                height="7"
-                rx="1"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.2"
-              />
-              <path
-                d="M4 5V3.5a3 3 0 0 1 6 0V5"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.2"
-              />
-            </svg>
-            Your details stay private. Never shared, never sold.
-          </div>
         </div>
       </div>
     </section>
