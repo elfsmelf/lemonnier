@@ -4,12 +4,21 @@ import { useEffect, useState } from "react";
 
 export default function StickyCTA() {
   const [visible, setVisible] = useState(false);
+
   useEffect(() => {
-    const onScroll = () => setVisible(window.scrollY > 400);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
+    const form = document.getElementById("quote");
+    if (!form) return;
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        setVisible(!entry.isIntersecting && window.scrollY > form.offsetTop);
+      },
+      { threshold: 0, rootMargin: "0px" }
+    );
+    io.observe(form);
+    return () => io.disconnect();
   }, []);
+
   return (
     <div className={"stickycta " + (visible ? "visible" : "")}>
       <a href="tel:+61800000000" className="stickycta-btn stickycta-call">

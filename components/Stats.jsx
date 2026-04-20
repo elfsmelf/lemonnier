@@ -1,7 +1,7 @@
 const items = [
   { n: "80+", l: "High-end gardens delivered" },
   { n: "4.9★", l: "Average Google rating" },
-  { n: "15", l: "Years in Perth" },
+  { n: "15", l: "Years experience" },
   { n: "24hr", l: "Response guaranteed" },
 ];
 

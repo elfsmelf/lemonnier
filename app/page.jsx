@@ -19,7 +19,7 @@ const headline = (
   </>
 );
 const subhead =
-  "Considered gardens from concept to handover. Free on-site consult. Fixed-price quotes. 15 years in Perth's western suburbs.";
+  "Considered gardens from concept to handover. Free on-site consult. Fixed-price quotes. 15 years experience across Perth's western suburbs.";
 
 export default function Page() {
   return (

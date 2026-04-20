@@ -35,7 +35,7 @@ export default function Hero({ headline, subhead }) {
             <li>
               <span className="check">✓</span>
               <span>
-                <strong>15 years in Perth</strong> — 80+ high-end gardens delivered.
+                <strong>15 years experience</strong> — 80+ high-end gardens delivered.
               </span>
             </li>
           </ul>

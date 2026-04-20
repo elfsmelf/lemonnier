@@ -39,7 +39,7 @@ export default function FinalCTA() {
             <span className="dot" />
             <span>Licensed &amp; insured</span>
             <span className="dot" />
-            <span>15 years in Perth</span>
+            <span>15 years experience</span>
           </div>
         </div>
         <div className="finalcta-form-wrap">

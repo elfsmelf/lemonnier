@@ -27,7 +27,7 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata = {
   title: "Lemonnier Landscapes — Perth's High-End Landscape Designers",
   description:
-    "Considered gardens from concept to handover. Free on-site consult. Fixed-price quotes. 15 years in Perth's western suburbs.",
+    "Considered gardens from concept to handover. Free on-site consult. Fixed-price quotes. 15 years experience across Perth's western suburbs.",
   metadataBase: new URL("https://lemonnier-landscapes.example.com"),
   openGraph: {
     title: "Lemonnier Landscapes — Perth's High-End Landscape Designers",
