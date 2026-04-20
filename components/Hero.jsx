@@ -41,9 +41,9 @@ export default function Hero({ headline, subhead }) {
           </ul>
 
           <div className="hero-call">
-            <a href="tel:+61800000000" className="call-big">
+            <a href="tel:+61401046618" className="call-big">
               <span className="call-label">Or call Thibeau directly</span>
-              <span className="call-num">(08) 9000 0000</span>
+              <span className="call-num">0401 046 618</span>
             </a>
           </div>
         </div>

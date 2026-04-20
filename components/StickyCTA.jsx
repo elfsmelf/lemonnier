@@ -21,7 +21,7 @@ export default function StickyCTA() {
 
   return (
     <div className={"stickycta " + (visible ? "visible" : "")}>
-      <a href="tel:+61800000000" className="stickycta-btn stickycta-call">
+      <a href="tel:+61401046618" className="stickycta-btn stickycta-call">
         <svg width="16" height="16" viewBox="0 0 14 14">
           <path
             d="M2 3a1 1 0 0 1 1-1h2l1.5 3L5 6.5a8 8 0 0 0 2.5 2.5L9 8l3 1.5v2a1 1 0 0 1-1 1A9 9 0 0 1 2 3z"

@@ -10,6 +10,7 @@ export default function QuickQuoteForm({ compact = false, anchorId }) {
   const [step, setStep] = useState(1);
   const [form, setForm] = useState({
     name: "",
+    email: "",
     phone: "",
     suburb: "",
     scope: "Full design & build",
@@ -26,6 +27,7 @@ export default function QuickQuoteForm({ compact = false, anchorId }) {
     e.preventDefault();
     const er = {};
     if (!form.name.trim()) er.name = "Enter your name";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) er.email = "Valid email please";
     if (!/^[0-9\s+()\-]{7,}$/.test(form.phone)) er.phone = "Valid phone number please";
     if (!form.suburb.trim()) er.suburb = "Which suburb?";
     setErrors(er);
@@ -102,8 +104,9 @@ export default function QuickQuoteForm({ compact = false, anchorId }) {
         </div>
         <h3>Thanks, {form.name.split(" ")[0]} — request received.</h3>
         <p>
-          Thibeau will personally call you on <strong>{form.phone}</strong> within 24 hours
-          (business days) to book your free on-site consult in <strong>{form.suburb}</strong>.
+          Thibeau will personally call you from <strong>0401 046 618</strong> within 24
+          hours (business days) to book your free on-site consult in{" "}
+          <strong>{form.suburb}</strong>. Save the number so you don&apos;t miss the call.
         </p>
         <div className="sent-meta">
           <span>✓ No obligation</span>
@@ -138,6 +141,8 @@ export default function QuickQuoteForm({ compact = false, anchorId }) {
             <span>Your name</span>
             <input
               type="text"
+              name="name"
+              id={(anchorId || "qform") + "-name"}
               value={form.name}
               onChange={(e) => set("name", e.target.value)}
               placeholder="Full name"
@@ -145,11 +150,28 @@ export default function QuickQuoteForm({ compact = false, anchorId }) {
             />
             {errors.name && <em>{errors.name}</em>}
           </label>
+          <label className={"field " + (errors.email ? "has-error" : "")}>
+            <span>Email</span>
+            <input
+              type="email"
+              name="email"
+              id={(anchorId || "qform") + "-email"}
+              inputMode="email"
+              value={form.email}
+              onChange={(e) => set("email", e.target.value)}
+              placeholder="you@example.com"
+              autoComplete="email"
+            />
+            {errors.email && <em>{errors.email}</em>}
+          </label>
           <div className="field-row">
             <label className={"field " + (errors.phone ? "has-error" : "")}>
               <span>Phone</span>
               <input
                 type="tel"
+                name="phone"
+                id={(anchorId || "qform") + "-phone"}
+                inputMode="tel"
                 value={form.phone}
                 onChange={(e) => set("phone", e.target.value)}
                 placeholder="04XX XXX XXX"
@@ -161,6 +183,8 @@ export default function QuickQuoteForm({ compact = false, anchorId }) {
               <span>Suburb</span>
               <input
                 type="text"
+                name="suburb"
+                id={(anchorId || "qform") + "-suburb"}
                 value={form.suburb}
                 onChange={(e) => set("suburb", e.target.value)}
                 placeholder="Cottesloe"
@@ -245,7 +269,7 @@ export default function QuickQuoteForm({ compact = false, anchorId }) {
           </label>
           {submitStatus === "error" && (
             <div className="qform-error" role="alert">
-              Something went wrong. Please try again or call (08) 9000 0000.
+              Something went wrong. Please try again or call 0401 046 618.
             </div>
           )}
           <button
