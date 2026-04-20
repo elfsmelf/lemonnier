@@ -30,10 +30,10 @@ export default function Page() {
         <Hero headline={headline} subhead={subhead} />
         <LogoStrip />
         <Stats />
-        <Services />
+        <Work />
         <Voices />
         <Process />
-        <Work />
+        <Services />
         <Guarantee />
         <FAQ />
         <FinalCTA />
