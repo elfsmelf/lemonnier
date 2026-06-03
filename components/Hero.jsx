@@ -9,12 +9,17 @@ import { getSuburbFromUrl, getServiceFromUrl } from "@/lib/suburb";
 export default function Hero({ headline, subhead }) {
   const [suburb, setSuburb] = useState("");
   const [service, setService] = useState("");
+  const [bookingMonth, setBookingMonth] = useState("");
 
   // Read the ?suburb= / ?service= params the Google Ads ad group passed
-  // (e.g. ?suburb=Fremantle, ?service=Pool-Landscaping).
+  // (e.g. ?suburb=Fremantle, ?service=Pool-Landscaping), and compute the
+  // current month so the "Now booking" badge never goes stale.
   useEffect(() => {
     setSuburb(getSuburbFromUrl());
     setService(getServiceFromUrl());
+    setBookingMonth(
+      new Date().toLocaleString("en-AU", { month: "long", year: "numeric" })
+    );
   }, []);
 
   // Build a message-matched eyebrow from whichever params are present.
@@ -42,7 +47,8 @@ export default function Hero({ headline, subhead }) {
         <div className="hero-copy">
           <div className="hero-badges">
             <span className="badge">
-              <span className="badge-dot" /> Now booking May 2026
+              <span className="badge-dot" />{" "}
+              {bookingMonth ? `Now booking ${bookingMonth}` : "Now taking bookings"}
             </span>
             {suburb && (
               <span className="badge badge--ghost">📍 Serving {suburb}</span>
