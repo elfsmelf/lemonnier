@@ -1,6 +1,7 @@
 import { Fraunces, Inter_Tight, JetBrains_Mono } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
+import { GADS_CONVERSION_ID } from "@/lib/gtag";
 
 const fraunces = Fraunces({
   subsets: ["latin"],
@@ -56,6 +57,20 @@ export default function RootLayout({ children }) {
     >
       <body>
         {children}
+        {/* Google tag (gtag.js) — Google Ads conversion tracking */}
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GADS_CONVERSION_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="gtag-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GADS_CONVERSION_ID}');
+          `}
+        </Script>
+        {/* Nimbata dynamic number insertion + call tracking */}
         <Script
           src="https://cdn.dni.nimbata.com/56902091997.min.js"
           strategy="afterInteractive"
