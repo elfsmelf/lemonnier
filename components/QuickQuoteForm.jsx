@@ -1,41 +1,33 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useSourcebuster } from "@/hooks/useSourcebuster";
 import { reportLeadConversion } from "@/lib/gtag";
-import { getSuburbFromUrl } from "@/lib/suburb";
 
 const WEBHOOK_URL = process.env.NEXT_PUBLIC_LEAD_WEBHOOK_URL || "";
 
 export default function QuickQuoteForm({ compact = false, anchorId }) {
   const trackingData = useSourcebuster();
   const [form, setForm] = useState({
-    name: "",
-    email: "",
+    firstName: "",
+    lastName: "",
     phone: "",
-    suburb: "",
-    scope: "Full design & build",
-    timing: "Within 3 months",
-    notes: "",
+    email: "",
+    services: "",
+    description: "",
   });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState("idle"); // idle | success | error
   const set = (k, v) => setForm((f) => ({ ...f, [k]: v }));
 
-  // Pre-fill Suburb from the ?suburb= URL param set by the Google Ads ad group
-  // (only if the visitor hasn't typed their own).
-  useEffect(() => {
-    const s = getSuburbFromUrl();
-    if (s) setForm((f) => (f.suburb ? f : { ...f, suburb: s }));
-  }, []);
-
   const validate = () => {
     const er = {};
-    if (!form.name.trim()) er.name = "Enter your name";
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) er.email = "Valid email please";
+    if (!form.firstName.trim()) er.firstName = "Enter your first name";
+    if (!form.lastName.trim()) er.lastName = "Enter your last name";
     if (!/^[0-9\s+()\-]{7,}$/.test(form.phone)) er.phone = "Valid phone number please";
-    if (!form.suburb.trim()) er.suburb = "Which suburb?";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) er.email = "Valid email please";
+    if (!form.services) er.services = "Please select a service";
     setErrors(er);
     return Object.keys(er).length === 0;
   };
@@ -114,11 +106,11 @@ export default function QuickQuoteForm({ compact = false, anchorId }) {
             <path d="M13 22l6 6 12-14" fill="none" stroke="currentColor" strokeWidth="2" />
           </svg>
         </div>
-        <h3>Thanks, {form.name.split(" ")[0]} — request received.</h3>
+        <h3>Thanks, {form.firstName} — request received.</h3>
         <p>
           Thibeau will personally call you from <strong>0401 046 618</strong> within 24
-          hours (business days) to book your free on-site consult in{" "}
-          <strong>{form.suburb}</strong>. Save the number so you don&apos;t miss the call.
+          hours (business days) to book your free on-site landscape assessment. Save the
+          number so you don&apos;t miss the call.
         </p>
         <div className="sent-meta">
           <span>✓ No obligation</span>
@@ -138,26 +130,57 @@ export default function QuickQuoteForm({ compact = false, anchorId }) {
     >
       <div className="qform-head">
         <div>
-          <h3>Get your free on-site quote</h3>
-          <p>Thibeau calls you personally within 24 hours.</p>
+          <h3>Get Your FREE Landscape Design Quote</h3>
+          <p>No obligation. Thibeau calls you personally within 24 hours.</p>
         </div>
       </div>
 
-      <label className={"field " + (errors.name ? "has-error" : "")}>
-        <span>Your name</span>
+      <div className="field-row">
+        <label className={"field " + (errors.firstName ? "has-error" : "")}>
+          <span>First name *</span>
+          <input
+            type="text"
+            name="firstName"
+            id={(anchorId || "qform") + "-first"}
+            value={form.firstName}
+            onChange={(e) => set("firstName", e.target.value)}
+            placeholder="First name"
+            autoComplete="given-name"
+          />
+          {errors.firstName && <em>{errors.firstName}</em>}
+        </label>
+        <label className={"field " + (errors.lastName ? "has-error" : "")}>
+          <span>Last name *</span>
+          <input
+            type="text"
+            name="lastName"
+            id={(anchorId || "qform") + "-last"}
+            value={form.lastName}
+            onChange={(e) => set("lastName", e.target.value)}
+            placeholder="Last name"
+            autoComplete="family-name"
+          />
+          {errors.lastName && <em>{errors.lastName}</em>}
+        </label>
+      </div>
+
+      <label className={"field " + (errors.phone ? "has-error" : "")}>
+        <span>📞 Phone *</span>
         <input
-          type="text"
-          name="name"
-          id={(anchorId || "qform") + "-name"}
-          value={form.name}
-          onChange={(e) => set("name", e.target.value)}
-          placeholder="Full name"
-          autoComplete="name"
+          type="tel"
+          name="phone"
+          id={(anchorId || "qform") + "-phone"}
+          inputMode="tel"
+          value={form.phone}
+          onChange={(e) => set("phone", e.target.value)}
+          placeholder="04XX XXX XXX"
+          autoComplete="tel"
         />
-        {errors.name && <em>{errors.name}</em>}
+        {errors.phone && <em>{errors.phone}</em>}
       </label>
+
       <label className={"field " + (errors.email ? "has-error" : "")}>
-        <span>Email</span>
+        <span>✉️ Email *</span>
         <input
           type="email"
           name="email"
@@ -170,38 +193,11 @@ export default function QuickQuoteForm({ compact = false, anchorId }) {
         />
         {errors.email && <em>{errors.email}</em>}
       </label>
-      <div className="field-row">
-        <label className={"field " + (errors.phone ? "has-error" : "")}>
-          <span>Phone</span>
-          <input
-            type="tel"
-            name="phone"
-            id={(anchorId || "qform") + "-phone"}
-            inputMode="tel"
-            value={form.phone}
-            onChange={(e) => set("phone", e.target.value)}
-            placeholder="04XX XXX XXX"
-            autoComplete="tel"
-          />
-          {errors.phone && <em>{errors.phone}</em>}
-        </label>
-        <label className={"field " + (errors.suburb ? "has-error" : "")}>
-          <span>Suburb</span>
-          <input
-            type="text"
-            name="suburb"
-            id={(anchorId || "qform") + "-suburb"}
-            value={form.suburb}
-            onChange={(e) => set("suburb", e.target.value)}
-            placeholder="Cottesloe"
-            autoComplete="address-level2"
-          />
-          {errors.suburb && <em>{errors.suburb}</em>}
-        </label>
-      </div>
-      <label className="field">
-        <span>Project</span>
-        <select value={form.scope} onChange={(e) => set("scope", e.target.value)}>
+
+      <label className={"field " + (errors.services ? "has-error" : "")}>
+        <span>Services *</span>
+        <select value={form.services} onChange={(e) => set("services", e.target.value)}>
+          <option value="">-- Select One --</option>
           <option>Full design &amp; build</option>
           <option>Design only</option>
           <option>Pool surrounds</option>
@@ -212,23 +208,16 @@ export default function QuickQuoteForm({ compact = false, anchorId }) {
           <option>Garden refresh</option>
           <option>Maintenance</option>
         </select>
+        {errors.services && <em>{errors.services}</em>}
       </label>
+
       <label className="field">
-        <span>When would you like to start?</span>
-        <select value={form.timing} onChange={(e) => set("timing", e.target.value)}>
-          <option>ASAP</option>
-          <option>Within 3 months</option>
-          <option>3–6 months</option>
-          <option>Just exploring</option>
-        </select>
-      </label>
-      <label className="field">
-        <span>Anything else? (optional)</span>
+        <span>Description (optional)</span>
         <textarea
           rows="2"
-          value={form.notes}
-          onChange={(e) => set("notes", e.target.value)}
-          placeholder="Access notes, inspiration, must-haves..."
+          value={form.description}
+          onChange={(e) => set("description", e.target.value)}
+          placeholder="Access notes, inspiration, must-haves…"
         />
       </label>
 
@@ -243,7 +232,7 @@ export default function QuickQuoteForm({ compact = false, anchorId }) {
         className="btn btn--primary btn--full btn--lg"
         disabled={isSubmitting}
       >
-        {isSubmitting ? "Sending…" : "Book my free consult"}
+        {isSubmitting ? "Sending…" : "Get A Free Estimate"}
         {!isSubmitting && (
           <svg width="16" height="16" viewBox="0 0 16 16">
             <path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" strokeWidth="1.8" />

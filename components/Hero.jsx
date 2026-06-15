@@ -1,110 +1,68 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Image from "next/image";
 import QuickQuoteForm from "./QuickQuoteForm";
-import { images } from "@/lib/images";
 import { getSuburbFromUrl, getServiceFromUrl } from "@/lib/suburb";
 
 export default function Hero({ headline, subhead }) {
   const [suburb, setSuburb] = useState("");
   const [service, setService] = useState("");
-  const [bookingMonth, setBookingMonth] = useState("");
 
   // Read the ?suburb= / ?service= params the Google Ads ad group passed
-  // (e.g. ?suburb=Fremantle, ?service=Pool-Landscaping), and compute the
-  // current month so the "Now booking" badge never goes stale.
+  // (e.g. ?suburb=Fremantle, ?service=Pool-Landscaping).
   useEffect(() => {
     setSuburb(getSuburbFromUrl());
     setService(getServiceFromUrl());
-    setBookingMonth(
-      new Date().toLocaleString("en-AU", { month: "long", year: "numeric" })
-    );
   }, []);
 
-  // Build a message-matched eyebrow from whichever params are present.
+  // Build a message-matched eyebrow from whichever params are present, falling
+  // back to a Perth geo line so the hero always reads as locally relevant.
   const eyebrow = service
     ? `${service}${suburb ? ` in ${suburb}` : " in Perth"}`
     : suburb
     ? `Landscaping in ${suburb}`
-    : "";
+    : "Perth's high-end landscape designers & builders";
 
   return (
-    <section id="top" className="hero">
-      <div className="hero-bg" aria-hidden="true">
-        <Image
-          src={images.lemonnier2}
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          style={{ objectFit: "cover", objectPosition: "center" }}
-        />
-        <div className="hero-scrim" />
-      </div>
+    <section id="top" className="hero hero--centered">
+      <div className="hero-inner">
+        {eyebrow && <p className="hero-eyebrow">{eyebrow}</p>}
+        <h1 className="display">{headline}</h1>
+        <p className="lede">{subhead}</p>
 
-      <div className="hero-grid">
-        <div className="hero-copy">
-          <div className="hero-badges">
-            <span className="badge">
-              <span className="badge-dot" />{" "}
-              {bookingMonth ? `Now booking ${bookingMonth}` : "Now taking bookings"}
-            </span>
-            {suburb && (
-              <span className="badge badge--ghost">📍 Serving {suburb}</span>
-            )}
-          </div>
+        <ul className="hero-trust">
+          <li>
+            <span className="check">✓</span> Free on-site consult
+          </li>
+          <li>
+            <span className="check">✓</span> Fixed-price quotes
+          </li>
+          <li>
+            <span className="check">✓</span> In-house build team
+          </li>
+          <li>
+            <span className="check">✓</span> 15 years experience
+          </li>
+        </ul>
 
-          {eyebrow && <p className="hero-eyebrow">{eyebrow}</p>}
-          <h1 className="display">{headline}</h1>
-          <p className="lede">
-            {suburb ? (
-              <>
-                Considered gardens for <strong>{suburb}</strong> homes — from
-                concept to handover. Free on-site consult. Fixed-price quotes. 15
-                years across Perth&apos;s western suburbs.
-              </>
-            ) : (
-              subhead
-            )}
-          </p>
-
-          <ul className="hero-bullets">
-            <li>
-              <span className="check">✓</span>
-              <span>
-                <strong>Free on-site consultation</strong> — $0, no obligation, no sales pitch.
-              </span>
-            </li>
-            <li>
-              <span className="check">✓</span>
-              <span>
-                <strong>Fixed-price quote</strong> — no surprise fees, ever.
-              </span>
-            </li>
-            <li>
-              <span className="check">✓</span>
-              <span>
-                <strong>In-house build team</strong> — design &amp; build handled by one crew.
-              </span>
-            </li>
-            <li>
-              <span className="check">✓</span>
-              <span>
-                <strong>15 years experience</strong> — 80+ high-end gardens delivered.
-              </span>
-            </li>
-          </ul>
-
-          <div className="hero-call">
-            <a href="tel:+61800000000" className="call-big">
-              <span className="call-label">Or call Thibeau directly</span>
-              <span className="call-num">(08) 9000 0000</span>
-            </a>
-          </div>
+        <div className="hero-call">
+          <a href="tel:+61800000000" className="btn btn--white btn--lg">
+            <svg width="22" height="22" viewBox="0 0 14 14" aria-hidden>
+              <path
+                d="M2 3a1 1 0 0 1 1-1h2l1.5 3L5 6.5a8 8 0 0 0 2.5 2.5L9 8l3 1.5v2a1 1 0 0 1-1 1A9 9 0 0 1 2 3z"
+                fill="currentColor"
+              />
+            </svg>
+            Speak With Us — (08) 9000 0000
+          </a>
         </div>
 
-        <div className="hero-form-wrap">
+        <p className="hero-formintro">
+          Simply call or fill in the form below for your complimentary expert
+          Perth landscape assessment!
+        </p>
+
+        <div className="hero-form-block">
           <QuickQuoteForm anchorId="quote" />
         </div>
       </div>
