@@ -13,6 +13,7 @@ export default function QuickQuoteForm({ compact = false, anchorId }) {
     lastName: "",
     phone: "",
     email: "",
+    suburb: "",
     services: "",
     description: "",
   });
@@ -27,6 +28,7 @@ export default function QuickQuoteForm({ compact = false, anchorId }) {
     if (!form.lastName.trim()) er.lastName = "Enter your last name";
     if (!/^[0-9\s+()\-]{7,}$/.test(form.phone)) er.phone = "Valid phone number please";
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) er.email = "Valid email please";
+    if (!form.suburb.trim()) er.suburb = "Enter your suburb";
     if (!form.services) er.services = "Please select a service";
     setErrors(er);
     return Object.keys(er).length === 0;
@@ -132,6 +134,10 @@ export default function QuickQuoteForm({ compact = false, anchorId }) {
         <div>
           <h3>Get Your FREE Landscape Design Quote</h3>
           <p>No obligation. Thibeau calls you personally within 24 hours.</p>
+          <p>
+            Simply call or fill in the form below for your complimentary expert
+            Perth landscape assessment!
+          </p>
         </div>
       </div>
 
@@ -165,7 +171,7 @@ export default function QuickQuoteForm({ compact = false, anchorId }) {
       </div>
 
       <label className={"field " + (errors.phone ? "has-error" : "")}>
-        <span>📞 Phone *</span>
+        <span>Phone *</span>
         <input
           type="tel"
           name="phone"
@@ -180,7 +186,7 @@ export default function QuickQuoteForm({ compact = false, anchorId }) {
       </label>
 
       <label className={"field " + (errors.email ? "has-error" : "")}>
-        <span>✉️ Email *</span>
+        <span>Email *</span>
         <input
           type="email"
           name="email"
@@ -192,6 +198,20 @@ export default function QuickQuoteForm({ compact = false, anchorId }) {
           autoComplete="email"
         />
         {errors.email && <em>{errors.email}</em>}
+      </label>
+
+      <label className={"field " + (errors.suburb ? "has-error" : "")}>
+        <span>Suburb *</span>
+        <input
+          type="text"
+          name="suburb"
+          id={(anchorId || "qform") + "-suburb"}
+          value={form.suburb}
+          onChange={(e) => set("suburb", e.target.value)}
+          placeholder="e.g. Fremantle"
+          autoComplete="address-level2"
+        />
+        {errors.suburb && <em>{errors.suburb}</em>}
       </label>
 
       <label className={"field " + (errors.services ? "has-error" : "")}>
